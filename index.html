@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fullSize</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/fullSize.css">
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <script src="src/fullSize.js"></script>
+</head>
+<body>
+    
+    <div class="main">
+        <div class="section">A</div>
+        <div class="section">B</div>
+        <div class="section fullSize-center">C</div>
+        <div class="section">D</div>
+        <div class="section fullSize-buttom">footer</div>
+    </div>
+    <script>
+        $('.main').fullSize();
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+
+@mixin rwd($Size)
+{
+	@media (max-width: $Size)
+	{
+		@content;
+	}
+}

@@ -1,0 +1,212 @@
+@import '_config.scss';
+
+
+@mixin border-radius($amount)
+{
+	border-radius: $amount;
+	-webkit-border-radius: $amount;
+	-moz-border-radius: $amount;
+	-ms-border-radius: $amount;
+	-o-border-radius: $amount;
+}
+
+@mixin box-shadow($config)
+{
+	box-shadow: $config;
+	-webkit-box-shadow: $config;
+	-moz-box-shadow: $config;
+	-ms-box-shadow: $config;
+	-o-box-shadow: $config;
+}
+
+@mixin text-shadow($config)
+{
+	text-shadow: $config;
+	-webkit-text-shadow: $config;
+	-moz-text-shadow: $config;
+	-ms-text-shadow: $config;
+	-o-text-shadow: $config;
+}
+
+@mixin transition($config)
+{
+	transition: $config;
+	-webkit-transition: $config;
+	-moz-transition: $config;
+	-ms-transition: $config;
+	-o-transition: $config;
+}
+
+@mixin transform($config)
+{
+	transform: $config;
+	-webkit-transform: $config;
+	-moz-transform: $config;
+	-ms-transform: $config;
+	-o-transform: $config;
+}
+
+@mixin transform-origin($config)
+{
+	transform-origin: $config;
+	-webkit-transform-origin: $config;
+	-moz-transform-origin: $config;
+	-ms-transform-origin: $config;
+	-o-transform-origin: $config;
+}
+
+@mixin filter($config)
+{
+	-webkit-filter: $config;
+	-moz-filter: $config;
+	-o-filter: $config;
+	-ms-filter: $config;
+	filter: $config;
+}
+
+@mixin animation($config)
+{
+	animation: $config;
+	-webkit-animation: $config;
+	-moz-animation: $config;
+	-ms-animation: $config;
+	-o-animation: $config;
+}
+
+@mixin clearfix()
+{
+	&:before,&:after
+	{
+		content: " ";
+		display: table;
+	}
+	&:after
+	{
+		clear: both;
+	}
+}
+
+::selection
+{
+    background: #ffe13d;
+}
+::-moz-selection
+{
+    background: #ffe13d;
+}
+
+*
+{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+
+html,body
+{
+	font-family: 'Noto Sans TC','Open Sans', sans-serif;
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 170%;
+	letter-spacing: 1px;
+	color: $FontColor;
+}
+a
+{
+	color: inherit;
+	text-decoration: none;
+}
+p
+{
+	line-height: 140%;
+	margin-bottom: 30px;	
+}
+
+h1,h2,h3,h4,h5
+{
+	position: relative;
+	margin-bottom: 15px;
+	line-height: 160%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	letter-spacing: 2px;
+}
+h1
+{
+	font-size: 32px;
+	font-weight: 500;
+}
+h2
+{
+	font-size: 29px;
+	font-weight: 500;
+}
+h3
+{
+	font-size: 20px;
+	font-weight: 500;
+}
+h4
+{
+	font-size: 19px;
+	font-weight: 500;
+}
+h5
+{
+	font-size: 17px;
+	font-weight: 500;
+}
+
+.clearfix
+{
+	@include clearfix();
+}
+
+.no-scroll
+{
+	overflow: hidden;
+}
+
+
+.main
+{
+	.section
+	{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 50px;
+
+		&:nth-child(1)
+		{
+			background-color: #3D9CA8;
+		}
+		&:nth-child(2)
+		{
+			background-color: #EFD8A1;
+		}
+		&:nth-child(3)
+		{
+			background-color: #BCD693;
+		}
+		&:nth-child(4)
+		{
+			background-color: #AFD7DB;
+		}
+		&:nth-child(5)
+		{
+			background-color: #3D9CA8;
+		}
+		
+	}
+
+	.section:nth-child(3)
+	{
+		height: 500px;
+	}
+	.section:last-child
+	{
+		height: 100px;
+	}
+}
