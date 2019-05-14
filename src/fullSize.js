@@ -3,11 +3,12 @@
     var Target=null;            //fullSizeContainer
     var Sections = [];          //所有區塊
     var LockWheelTimer;         //鎖定滾輪時間戳
-    var LastEffectY = 0;        //上一次的偏移值
+    var LastEffectXY = 0;        //上一次的偏移值
     var DotContainer;           //點點Container
     var Dots = [];              //所有點點
 
     var Config={
+        Horizontal: false,      //是否水平排列
         'LockWheel': true,      //是否暫時鎖定滾輪
         'LockWheelTime': 250,   //鎖定滾輪時間(需配合LockWheel)
         'DynamicSpeed': true,   //動畫是否會依照距離長度而改變(避免短距離太慢)
@@ -22,7 +23,8 @@
             Config = $.extend(Config, CustomOptions);
 
             Target=this;
-            Sections=$(Target).find('.section');
+            Sections=$(Target).find('>.section');
+            console.log(Sections);
 
             $(window).on('resize',function(){
                 methods.reSize();
@@ -50,6 +52,15 @@
                 }
                 
             });
+
+            if(Config.Horizontal)
+            {
+                $(Target).width(Sections.length*100+'%');
+
+                $(Sections).each(function () {
+                    $(this).css({'float':'left'});
+                });
+            }
 
             /*window.addEventListener('mousewheel',function(e){
                 // e.preventDefault();
@@ -98,17 +109,39 @@
 
             var WindowWidth=$(window).width();
             var WindowHeight=$(window).height();
+
             $(Sections).each(function(){
 
-                if (!$(this).hasClass('fullSize-center') && 
-                    !$(this).hasClass('fullSize-buttom') && 
-                    !$(this).hasClass('fullSize-custom'))
+                if(Config.Horizontal)
                 {
                     $(this).css({
-                        width: WindowWidth,
-                        height: WindowHeight,
+                        width: WindowWidth
                     });
+
+                    if (!$(this).hasClass('fullSize-center') &&
+                        !$(this).hasClass('fullSize-buttom') &&
+                        !$(this).hasClass('fullSize-custom')) {
+                            $(this).css({
+                                height: WindowHeight
+                            });
+                        }
                 }
+                else
+                {
+                    $(this).css({
+                        width: WindowWidth
+                    });
+
+                    if (!$(this).hasClass('fullSize-center') && 
+                        !$(this).hasClass('fullSize-buttom') && 
+                        !$(this).hasClass('fullSize-custom'))
+                    {
+                        $(this).css({
+                            height: WindowHeight
+                        });
+                    }
+                }
+
 
             });
             
@@ -171,42 +204,48 @@
         NextSection.addClass('active');
 
         //紀錄上方累積高度
-        var EffectY=[];
+        var EffectXY=[];
         var Index = NextSection.index()+1;
         for(var i=0;i<Index;i++)
         {
-            EffectY.push($(Sections).eq(i).height());
+            EffectXY.push(
+                Config.Horizontal ? $(Sections).eq(i).width() : $(Sections).eq(i).height()
+            );
         }
 
         //目標對齊底部
         if (NextSection.hasClass('fullSize-buttom'))
         {
-            var SelfY = EffectY.pop();
-            EffectY.pop();
-            EffectY.push(SelfY);
+            var SelfY = EffectXY.pop();
+            EffectXY.pop();
+            EffectXY.push(SelfY);
         }
         //目標對齊中央
         else if (NextSection.hasClass('fullSize-center'))
         {
-            var SelfY = EffectY.pop();
-            EffectY.push( ($(window).height() - SelfY)/-2 );
+            var SelfY = EffectXY.pop();
+            EffectXY.push(
+                (
+                    (Config.Horizontal ? $(window).width() : $(window).height()) - SelfY
+                ) / -2 
+            );
         }
         //目標對齊頂部
         else
         {
-            EffectY.pop();
+            EffectXY.pop();
         }
 
         //統計上方累積高度
-        var EffectYTotal=0;
-        for (var i = 0; i < EffectY.length;i++)
+        var EffectXYTotal=0;
+        for (var i = 0; i < EffectXY.length;i++)
         {
-            EffectYTotal += EffectY[i];
+            EffectXYTotal += EffectXY[i];
         }
 
         //
         $(Target).css({
-            'transform': 'translateY(' + (EffectYTotal*-1) + 'px)'
+            'transform': 'translate' + (Config.Horizontal?'X':'Y') + '(' + (EffectXYTotal*-1) + 'px)'
         });
 
         //點點
@@ -217,7 +256,7 @@
         }
 
         //紀錄
-        LastEffectY = EffectYTotal * -1;
+        LastEffectXY = EffectXYTotal * -1;
 
         $(Target).removeClass('view-' + NowSection.index());
         $(Target).addClass('view-' + NextSection.index());
